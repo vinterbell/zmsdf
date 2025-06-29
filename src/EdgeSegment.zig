@@ -14,9 +14,13 @@ pub const cubic_search_starts = 4;
 pub const cubic_search_steps = 4;
 
 pub const Kind = enum(u8) {
-    linear,
-    quadratic,
-    cubic,
+    linear = 1,
+    quadratic = 2,
+    cubic = 3,
+
+    pub inline fn order(self: Kind) u8 {
+        return @intFromEnum(self);
+    }
 };
 
 const dot = zmsdf.Vector2.dot;

@@ -83,11 +83,7 @@ pub fn normalize(shape: *Shape) !void {
                     const factor = deconverge_overshoot *
                         @sqrt(1 - (corner_dot_epsilon_minus_one) * (corner_dot_epsilon_minus_one)) / (corner_dot_epsilon_minus_one);
                     var axis = (cur_dir.subtract(prev_dir)).normalize(false).multiplyByScalar(factor);
-                    // Determine curve ordering using third-order derivative (t = 0) of
-                    // crossProduct((*prevEdge)->point(1-t)-p0, (*edge)->point(t)-p0) where p0 is the corner (*edge)->point(0)
-                    if (zmsdf.Vector2.cross(prev_edge.directionChange(1), edge.direction(0)) +
-                        zmsdf.Vector2.cross(edge.directionChange(0), prev_edge.direction(1)) < 0)
-                    {
+                    if (zmsdf.convergentCurveOrdering(prev_edge, edge) == .neg) {
                         axis = axis.multiplyByScalar(-1);
                     }
                     deconvergeEdge(prev_edge, 1, axis.getOrthonormal(true, false));

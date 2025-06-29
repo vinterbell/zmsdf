@@ -30,6 +30,9 @@ pub const OverlappingMultiAndTrueDistanceContourCombiner = contour_combiners.Ove
 pub const DistanceMapping = @import("DistanceMapping.zig");
 pub const EdgeSegment = @import("EdgeSegment.zig");
 
+const convergent_curve_ordering = @import("convergent_curve_ordering.zig");
+pub const convergentCurveOrdering = convergent_curve_ordering.convergentCurveOrdering;
+
 const edge_coloring = @import("edge_coloring.zig");
 pub const edgeColoringSimple = edge_coloring.edgeColoringSimple;
 pub const edgeColoringInkTrap = edge_coloring.edgeColoringInkTrap;
@@ -169,6 +172,22 @@ pub const Polarity = enum(i32) {
 
     pub inline fn isNegative(self: Polarity) bool {
         return self.asInt() < 0;
+    }
+
+    pub inline fn multiply(self: Polarity, other: Polarity) Polarity {
+        return switch (self) {
+            .pos => switch (other) {
+                .pos => .pos,
+                .neg => .neg,
+                .zero => .zero,
+            },
+            .neg => switch (other) {
+                .pos => .neg,
+                .neg => .pos,
+                .zero => .zero,
+            },
+            .zero => .zero,
+        };
     }
 };
 

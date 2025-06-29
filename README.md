@@ -1,5 +1,7 @@
 # Rewrite of [msdfgen](https://github.com/Chlumsky/msdfgen) in zig
 
+Git commit in original repository: 54535fc7c02a4935a4eef3c6e296666bd4ab9bd8 (Corner deconvergence polarity fix)
+
 ## Running example
 ```sh
 zig build run-example -Dbuild-example=true -- <optional msdf|sdf> <optional codepoint> <optional font path>
