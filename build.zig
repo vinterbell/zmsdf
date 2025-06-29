@@ -10,7 +10,7 @@ pub fn build(b: *std.Build) !void {
         return err;
     };
 
-    const build_example = b.option(bool, "build-example", "Build the example executable") orelse true;
+    const build_example = b.option(bool, "build-example", "Build the example executable") orelse false;
 
     // new rewrite
     const zmsdf = b.addModule("zmsdf", .{
