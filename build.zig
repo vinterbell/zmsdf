@@ -10,7 +10,9 @@ pub fn build(b: *std.Build) !void {
         return err;
     };
 
-    const build_example = b.option(bool, "build-example", "Build the example executable") orelse false;
+    // build by default if we are the root package
+    const build_example = b.option(bool, "build-example", "Build the example executable") orelse
+        b.pkg_hash.len == 0;
 
     // new rewrite
     const zmsdf = b.addModule("zmsdf", .{
